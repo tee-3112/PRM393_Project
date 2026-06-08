@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản lý Thu Chi - Ứng dụng Tài chính Cá nhân</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  background: #e8f5e9;
+  color: #212121;
+  -webkit-font-smoothing: antialiased;
+}
+nav {
+  background: #fff;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+nav .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; color:#2E7D32; }
+nav .logo svg { flex-shrink:0; }
+nav .links { display:flex; gap:24px; }
+nav .links a { text-decoration:none; color:#555; font-size:14px; font-weight:500; transition:color .2s; }
+nav .links a:hover { color:#2E7D32; }
+
+.hero {
+  background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #43A047 100%);
+  color: #fff;
+  text-align: center;
+  padding: 80px 24px 72px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(255,255,255,.05) 0%, transparent 60%);
+}
+.hero h1 { font-size: clamp(32px,5vw,52px); font-weight:800; letter-spacing:-.02em; position:relative; }
+.hero p { font-size: clamp(16px,2vw,20px); opacity:.88; margin-top:12px; max-width:560px; margin-inline:auto; position:relative; line-height:1.6; }
+.hero .badges { display:flex; gap:12px; justify-content:center; margin-top:28px; flex-wrap:wrap; position:relative; }
+.hero .badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background: rgba(255,255,255,.15); backdrop-filter:blur(6px);
+  padding:8px 18px; border-radius:999px;
+  font-size:13px; font-weight:500; border:1px solid rgba(255,255,255,.12);
+}
+
+section { padding:64px 24px; }
+.section-title { text-align:center; margin-bottom:48px; }
+.section-title h2 { font-size:28px; font-weight:700; color:#1B5E20; }
+.section-title p { color:#666; margin-top:8px; font-size:15px; }
+
+.screens { max-width:1200px; margin:0 auto; }
+.screen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+.screen-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  transition: transform .25s, box-shadow .25s;
+}
+.screen-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+.screen-card .phone {
+  width: 280px; height: 610px;
+  background: #fff; border-radius: 32px; overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 0 0 0 5px #333, 0 0 0 7px #555, 0 10px 30px rgba(0,0,0,.15);
+  position: relative;
+}
+.screen-card .phone .notch-bar {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 100px; height: 20px; background: #1a1a2e; border-radius: 0 0 12px 12px; z-index: 10;
+}
+.screen-card .phone iframe { width: 100%; height: 100%; border: none; display: block; }
+.screen-card .label { margin-top: 14px; font-weight: 700; font-size: 15px; color: #2E7D32; }
+.screen-card .desc { font-size: 13px; color: #777; margin-top: 4px; line-height: 1.5; }
+
+.features { background: #fff; }
+.feature-grid {
+  max-width: 1000px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
+}
+.feature-card {
+  background: #f1f8e9; border-radius: 14px; padding: 24px; text-align: center;
+  transition: transform .25s, box-shadow .25s;
+}
+.feature-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(46,125,50,.1); }
+.feature-card .icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 12px;
+}
+.feature-card h3 { font-size: 15px; font-weight: 700; color: #1B5E20; }
+.feature-card p { font-size: 13px; color: #666; margin-top: 6px; line-height: 1.5; }
+
+.tech { background: #e8f5e9; }
+.tech-grid {
+  max-width: 800px; margin: 0 auto;
+  display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;
+}
+.tech-chip {
+  background: #fff; border: 1px solid #c8e6c9;
+  padding: 12px 24px; border-radius: 999px;
+  font-size: 14px; font-weight: 600; color: #2E7D32;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+
+footer {
+  background: #1B5E20; color: rgba(255,255,255,.8);
+  text-align: center; padding: 32px 24px; font-size: 13px; line-height: 1.7;
+}
+footer strong { color: #fff; }
+
+@media (max-width: 640px) {
+  nav .links { display: none; }
+  .hero { padding: 56px 20px 48px; }
+  section { padding: 40px 16px; }
+  .screen-grid { gap: 24px; }
+  .screen-card .phone { width: 240px; height: 520px; border-radius: 28px; }
+  .screen-card .phone .notch-bar { width: 80px; height: 16px; border-radius: 0 0 10px 10px; top: 8px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="currentColor"/><path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 9H9V9h2v6zm4 0h-2V9h2v6z" fill="currentColor"/></svg>
+    Quản lý Thu Chi
+  </div>
+  <div class="links">
+    <a href="#screens">Màn hình</a>
+    <a href="#features">Tính năng</a>
+    <a href="#tech">Công nghệ</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Quản lý Thu Chi</h1>
+  <p>Ứng dụng tài chính cá nhân thông minh &mdash; theo dõi thu nhập, chi tiêu, tiết kiệm và ngân sách hàng tháng dễ dàng.</p>
+  <div class="badges">
+    <span class="badge">📱 Material Design 3</span>
+    <span class="badge">⚡ Flutter</span>
+    <span class="badge">💰 Quản lý tài chính</span>
+  </div>
+</section>
+
+<section id="screens" class="screens">
+  <div class="section-title">
+    <h2>📱 Các màn hình ứng dụng</h2>
+    <p>Trải nghiệm đầy đủ tính năng quản lý tài chính cá nhân</p>
+  </div>
+  <div class="screen-grid">
+
+    <div class="screen-card">
+      <div class="phone"><div class="notch-bar"></div>
+        <iframe src="screens/login.html" loading="lazy"></iframe>
+      </div>
+      <div class="label">🔐 Đăng nhập / Đăng ký</div>
+      <div class="desc">Bảo mật tài khoản cá nhân, đăng nhập nhanh chóng</div>
+    </div>
+
+    <div class="screen-card">
+      <div class="phone"><div class="notch-bar"></div>
+        <iframe src="screens/dashboard.html" loading="lazy"></iframe>
+      </div>
+      <div class="label">📊 Thống kê</div>
+      <div class="desc">Dashboard realtime với biểu đồ xu hướng thu chi &amp; danh mục</div>
+    </div>
+
+    <div class="screen-card">
+      <div class="phone"><div class="notch-bar"></div>
+        <iframe src="screens/income.html" loading="lazy"></iframe>
+      </div>
+      <div class="label">📈 Thu nhập</div>
+      <div class="desc">Ghi chép và thống kê các khoản thu nhập trong tháng</div>
+    </div>
+
+    <div class="screen-card">
+      <div class="phone"><div class="notch-bar"></div>
+        <iframe src="screens/expense.html" loading="lazy"></iframe>
+      </div>
+      <div class="label">📉 Chi tiêu</div>
+      <div class="desc">Theo dõi chi tiêu hàng ngày, phân tích danh mục</div>
+    </div>
+
+    <div class="screen-card">
+      <div class="phone"><div class="notch-bar"></div>
+        <iframe src="screens/calendar.html" loading="lazy"></iframe>
+      </div>
+      <div class="label">📅 Lịch Thu Chi</div>
+      <div class="desc">Xem thu chi theo ngày, tổng thu, tổng chi &amp; số dư</div>
+    </div>
+
+    <div class="screen-card">
+      <div class="phone"><div class="notch-bar"></div>
+        <iframe src="screens/budget.html" loading="lazy"></iframe>
+      </div>
+      <div class="label">💰 Ngân sách</div>
+      <div class="desc">Đặt ngân sách từng mục, cảnh báo khi sắp hết</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="features" class="features">
+  <div class="section-title">
+    <h2>⚡ Tính năng chính</h2>
+    <p>Đầy đủ công cụ quản lý tài chính cá nhân</p>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon" style="background:#e8f5e9;color:#2E7D32;">💳</div>
+      <h3>Quản lý Thu / Chi</h3>
+      <p>Ghi chép giao dịch thu nhập và chi tiêu hàng ngày, phân loại theo danh mục</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon" style="background:#e3f2fd;color:#1565C0;">📊</div>
+      <h3>Dashboard Realtime</h3>
+      <p>Biểu đồ xu hướng thu chi theo ngày, biểu đồ tròn danh mục chi tiết</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon" style="background:#fff3e0;color:#E65100;">📅</div>
+      <h3>Lịch Thu Chi</h3>
+      <p>Xem tổng quan thu, chi, số dư từng ngày trong tháng dạng lịch</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon" style="background:#fce4ec;color:#C62828;">💰</div>
+      <h3>Ngân sách thông minh</h3>
+      <p>Đặt ngân sách theo danh mục, cảnh báo đỏ khi đạt 90% hạn mức</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon" style="background:#e8f5e9;color:#2E7D32;">🔐</div>
+      <h3>Bảo mật tài khoản</h3>
+      <p>Đăng nhập, đăng ký, bảo vệ dữ liệu tài chính cá nhân</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon" style="background:#f3e5f5;color:#6A1B9A;">📱</div>
+      <h3>Material Design 3</h3>
+      <p>Giao diện Android đẹp mắt, tông xanh lá chủ đạo, trải nghiệm mượt mà</p>
+    </div>
+  </div>
+</section>
+
+<section id="tech" class="tech">
+  <div class="section-title">
+    <h2>🛠 Công nghệ sử dụng</h2>
+    <p>Flutter - Hiện đại, mạnh mẽ, đa nền tảng</p>
+  </div>
+  <div class="tech-grid">
+    <span class="tech-chip">⚡ Flutter 3.41</span>
+    <span class="tech-chip">🟢 Dart</span>
+    <span class="tech-chip">📊 fl_chart</span>
+    <span class="tech-chip">🔄 Provider</span>
+    <span class="tech-chip">📅 intl</span>
+    <span class="tech-chip">📱 Android</span>
+  </div>
+</section>
+
+<footer>
+  <strong>Quản lý Thu Chi</strong> &mdash; Ứng dụng tài chính cá nhân<br>
+  Xây dựng với Flutter &bull; Material Design 3 &bull; Dành cho Android
+</footer>
+
+</body></html>
