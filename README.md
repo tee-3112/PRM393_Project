@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿# Quản Lý Thu Chi
 
 App quản lý thu chi cá nhân - Flutter + .NET Web API
@@ -58,3 +59,6 @@ flutter run
 
 Flutter app mặc định kết nối backend tại `http://10.0.2.2:5000` (Android emulator localhost).
 Nếu chạy trên thiết bị thật hoặc backend ở IP khác, sửa trong `lib/services/api_service.dart`.
+=======
+# PRM393_Project
+>>>>>>> 55e1c9a8a591141a604dc9f52b69081171498e2e
